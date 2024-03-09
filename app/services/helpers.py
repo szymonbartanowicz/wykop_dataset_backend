@@ -1,17 +1,17 @@
 from app.config.columns import *
+import re
 
 
-def prepare_response(response):
-    total = response['response']["numFound"]
-    data = response['response']["docs"]
-    facets = response.get('facet_counts', {}).get('facet_fields', {})
-    highlighting = response.get('highlighting', {})
-
+def prepare_response(response) -> dict:
+    total = response["response"]["numFound"]
+    data = response["response"]["docs"]
+    facets = response.get("facet_counts", {}).get("facet_fields", {})
+    highlighting = response.get("highlighting", {})
     return {
         "total": total,
         "data": data,
         "facets": facets,
-        "highlighting": highlighting
+        "highlighting": highlighting,
     }
 
 
@@ -31,3 +31,31 @@ def get_actual_column(column) -> str:
     if COLUMNS_METADATA[column]["has_alias"]:
         column += "_str"
     return column
+
+
+def escape_special_chars_in_search_phrase(search_phrase) -> str:
+    special_characters = [
+        "+",
+        "-",
+        "&",
+        "|",
+        "!",
+        "(",
+        ")",
+        "{",
+        "}",
+        "[",
+        "]",
+        "^",
+        "~",
+        "*",
+        "?",
+        ":",
+        "\\",
+    ]
+    escaped_query = re.sub(
+        r"([{}])".format("".join(map(re.escape, special_characters))),
+        r"\\\1",
+        search_phrase,
+    )
+    return escaped_query

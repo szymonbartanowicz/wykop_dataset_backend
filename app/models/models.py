@@ -25,7 +25,7 @@ class ItemsPerPageEnum(IntEnum):
 class Filter(BaseModel):
     name: str
     operation: OperationEnum
-    value: str
+    value: str | int | bool
 
 
 class SearchParameters(BaseModel):

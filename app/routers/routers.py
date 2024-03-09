@@ -8,11 +8,10 @@ router = APIRouter()
 
 
 @router.post("/")
-async def search(search_parameters: SearchParameters):
+def search(search_parameters: SearchParameters):
     try:
         qb = QueryBuilder(search_parameters)
         url = qb.get_full_url()
-        print(url)
         response = requests.get(url)
         return prepare_response(response.json())
     except Exception as e:

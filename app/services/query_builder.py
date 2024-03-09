@@ -60,8 +60,9 @@ class QueryBuilder:
         if self.search_parameters.search is None:
             self.query += "*"
         else:
+            search_phrase = escape_special_chars_in_search_phrase(self.search_parameters.search)
             self.query += (
-                self.search_parameters.search
+                search_phrase
                 + "~"
                 + str(CONFIG["maximum_edit_distance"])
                 + "&qf="
@@ -81,11 +82,11 @@ class QueryBuilder:
         self.validate_filters(filter)
         filter_query = filter.name + ":"
         if filter.operation == OperationEnum.equals.value:
-            filter_query += '"' + filter.value + '"'
+            filter_query += '"' + str(filter.value) + '"'
         elif filter.operation == OperationEnum.greater_than.value:
-            filter_query += "[" + filter.value + " TO *]"
+            filter_query += "[" + str(filter.value) + " TO *]"
         elif filter.operation == OperationEnum.less_than.value:
-            filter_query += "[* TO " + filter.value + "]"
+            filter_query += "[* TO " + str(filter.value) + "]"
         self.query += "&fq=" + filter_query
 
     def validate_filters(self, filter: Filter):
