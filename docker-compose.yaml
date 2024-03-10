@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  backend:
+    build: .
+    command: bash -c "uvicorn app.main:app --reload --port=${BACKEND_PORT} --host=0.0.0.0"
+    env_file:
+      - .env
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    volumes:
+      - .:/code
+  solr:
+    image: solr:latest
+    ports:
+      - "${SOLR_PORT}:${SOLR_PORT}"
+    volumes:
+      - ./wykop_dataset.csv:/wykop_dataset.csv
+    command: >
+      bash -c "
+        solr start && \
+        solr create -c ${SOLR_COLLECTION} && \
+        solr post -c ${SOLR_COLLECTION} /wykop_dataset.csv && \
+        solr stop && \
+        solr start -f
+      "

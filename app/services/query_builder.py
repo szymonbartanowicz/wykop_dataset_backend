@@ -35,7 +35,7 @@ class QueryBuilder:
 
     def set_base_url(self):
         self.base_url = (
-            os.getenv("SOLR_HOST")
+            "http://solr"
             + ":"
             + os.getenv("SOLR_PORT")
             + "/solr/"

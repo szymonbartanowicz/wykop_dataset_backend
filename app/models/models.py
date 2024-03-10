@@ -3,15 +3,15 @@ from enum import Enum, IntEnum
 
 
 class OrderDirectionEnum(str, Enum):
-    asc = 'asc'
-    desc = 'desc'
+    asc = "asc"
+    desc = "desc"
 
 
 class OperationEnum(str, Enum):
-    equals = 'equals'
-    contains = 'contains'
-    greater_than = 'greater_than'
-    less_than = 'less_than'
+    equals = "equals"
+    contains = "contains"
+    greater_than = "greater_than"
+    less_than = "less_than"
 
 
 class ItemsPerPageEnum(IntEnum):
@@ -38,3 +38,10 @@ class SearchParameters(BaseModel):
 
     class Config:
         extra = Extra.forbid
+
+
+class SearchResults(BaseModel):
+    total: int
+    data: list[dict]
+    facets: dict
+    highlighting: dict
