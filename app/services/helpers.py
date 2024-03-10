@@ -1,18 +1,20 @@
 from app.config.columns import *
 import re
+from app.models.models import SearchResults
 
 
-def prepare_response(response) -> dict:
+def prepare_response(response) -> SearchResults:
     total = response["response"]["numFound"]
     data = response["response"]["docs"]
     facets = response.get("facet_counts", {}).get("facet_fields", {})
     highlighting = response.get("highlighting", {})
-    return {
-        "total": total,
-        "data": data,
-        "facets": facets,
-        "highlighting": highlighting,
-    }
+    search_results = SearchResults(
+        total=total,
+        data=data,
+        facets=facets,
+        highlighting=highlighting
+    )
+    return search_results
 
 
 def get_serialized_search_columns_with_boosts() -> str:
