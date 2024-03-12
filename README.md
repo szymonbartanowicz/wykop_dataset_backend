@@ -1,5 +1,5 @@
 ## Info
-Backend wyszukiwarki napisany w FastAPI, korzystający z silnika wyszukiwań Solr. Aplikacja operuje na zbiorze danych zawierającym ponad 100 tysięcy dokumentów.
+Backend wyszukiwarki napisany w FastAPI, korzystający z silnika wyszukiwań Solr. Aplikacja operuje na zbiorze danych zawierającym ponad 100 tysięcy dokumentów będącym reprezentacją postów w serwisie wykop.pl.
 ## Funkcjonalności
 
 - Wyszukiwanie rozmyte
