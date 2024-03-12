@@ -17,7 +17,7 @@ def test_pagination():
         "items_per_page": items_per_page,
     })
     assert response.status_code == 200
-    assert len(response.json()["data"]) == 5
+    assert len(response.json()["data"]) == items_per_page
 
 
 def test_search():
